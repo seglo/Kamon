@@ -487,6 +487,10 @@ lazy val `kamon-akka-http` = (project in file("instrumentation/kamon-akka-http")
   )).dependsOn(`kamon-akka`, `kamon-testkit` % "test")
 
 
+val pekkoHttpVersion = "0.0.0+4299-acd0f833-SNAPSHOT"
+val pekkoVersion = "0.0.0+26601-29800df0-SNAPSHOT"
+
+
 lazy val `kamon-pekko` = (project in file("instrumentation/kamon-pekko"))
   .enablePlugins(JavaAgent)
   .disablePlugins(AssemblyPlugin)
@@ -495,6 +499,30 @@ lazy val `kamon-pekko` = (project in file("instrumentation/kamon-pekko"))
     `kamon-scala-future` % "compile",
     `kamon-testkit` % "test"
   )
+
+lazy val `kamon-pekko-http` = (project in file("instrumentation/kamon-pekko-http"))
+  .enablePlugins(JavaAgent)
+  .disablePlugins(AssemblyPlugin)
+  .settings(instrumentationSettings)
+  .settings(Seq(
+    resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
+    javaAgents += "org.mortbay.jetty.alpn" % "jetty-alpn-agent" % "2.0.10" % "test",
+    libraryDependencies ++= Seq(
+      kanelaAgent % "provided",
+      "org.apache.pekko" %% "pekko-http"           % pekkoHttpVersion % "provided",
+      "org.apache.pekko" %% "pekko-http2-support"   % "0.0.0+4272-045c925b-SNAPSHOT" % "provided",
+      "org.apache.pekko" %% "pekko-stream"          % pekkoVersion % "provided",
+
+      scalatest % "test",
+      slf4jApi % "test",
+      slf4jnop % "test",
+      okHttp % "test",
+      "org.apache.pekko" %% "pekko-http-testkit"    % pekkoHttpVersion % "test",
+      "com.github.pjfanning" %% "pekko-http-json4s"     % "1.40.0-RC3_17-0a23ccd2-SNAPSHOT" % "test",
+      "org.json4s"        %% "json4s-native"        % "4.0.6" % "test",
+    ),
+  )).dependsOn(`kamon-pekko`, `kamon-testkit` % "test")
+
 lazy val `kamon-akka-grpc` = (project in file("instrumentation/kamon-akka-grpc"))
   .enablePlugins(JavaAgent, AkkaGrpcPlugin)
   .disablePlugins(AssemblyPlugin)
