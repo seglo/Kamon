@@ -1,4 +1,4 @@
-package pekko.actor.instrumentation;
+package org.apache.pekko.actor.instrumentation;
 
 import org.apache.pekko.actor.Cell;
 import org.apache.pekko.actor.UnstartedCell;

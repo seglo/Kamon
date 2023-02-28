@@ -24,7 +24,7 @@ import kamon.instrumentation.context.{HasContext, HasTimestamp}
 import kanela.agent.api.instrumentation.InstrumentationBuilder
 import kanela.agent.libs.net.bytebuddy.asm.Advice
 import kanela.agent.libs.net.bytebuddy.asm.Advice.{Argument, OnMethodEnter, OnMethodExit, This}
-import pekko.actor.instrumentation.ReplaceWithAdvice
+import org.apache.pekko.actor.instrumentation.ReplaceWithAdvice
 
 class ActorInstrumentation extends InstrumentationBuilder {
 
