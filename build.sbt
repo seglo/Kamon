@@ -137,6 +137,8 @@ val instrumentationProjects = Seq[ProjectReference](
   `kamon-akka`,
   `kamon-akka-http`,
   `kamon-akka-grpc`,
+  `kamon-pekko`,
+  `kamon-pekko-http`,
   `kamon-play`,
   `kamon-okhttp`,
   `kamon-tapir`,
@@ -487,10 +489,9 @@ lazy val `kamon-akka-http` = (project in file("instrumentation/kamon-akka-http")
     ),
   )).dependsOn(`kamon-akka`, `kamon-testkit` % "test")
 
-
-val pekkoHttpVersion = "0.0.0+4299-acd0f833-SNAPSHOT"
-val pekkoVersion = "0.0.0+26601-29800df0-SNAPSHOT"
-
+val pekkoHttpVersion = "0.0.0+4419-94d1b1c1-SNAPSHOT"
+val pekkoHttp2SupportVersion = "0.0.0+4272-045c925b-SNAPSHOT"
+val pekkoVersion = "0.0.0+26669-ec5b6764-SNAPSHOT"
 
 lazy val `kamon-pekko` = (project in file("instrumentation/kamon-pekko"))
   .enablePlugins(JavaAgent)
@@ -511,7 +512,7 @@ lazy val `kamon-pekko-http` = (project in file("instrumentation/kamon-pekko-http
     libraryDependencies ++= Seq(
       kanelaAgent % "provided",
       "org.apache.pekko" %% "pekko-http"           % pekkoHttpVersion % "provided",
-      "org.apache.pekko" %% "pekko-http2-support"   % "0.0.0+4272-045c925b-SNAPSHOT" % "provided",
+      "org.apache.pekko" %% "pekko-http2-support"   % pekkoHttp2SupportVersion % "provided",
       "org.apache.pekko" %% "pekko-stream"          % pekkoVersion % "provided",
 
       scalatest % "test",
@@ -967,6 +968,8 @@ lazy val `kamon-bundle-dependencies-all` = (project in file("bundle/kamon-bundle
     `kamon-system-metrics`,
     `kamon-akka`,
     `kamon-akka-http`,
+    `kamon-pekko`,
+    `kamon-pekko-http`,
     `kamon-play`,
     `kamon-redis`,
     `kamon-okhttp`,
